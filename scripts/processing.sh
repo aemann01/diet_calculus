@@ -157,14 +157,14 @@ ls *spike*fa.gz | sed  's/.fa.gz//' | while read line; do kraken2 --db ~/referen
 
 #get summaries and remove kraken output
 cd ../kraken1
-ls *spike*out | sed 's/.spike.out//' | while read line; do awk -F"\t" '{print $2, "\t", $3}' $line.spike.out | sed 's/:.:.*\t/\t/' | sed 's/^M_//' | sed 's/^MT_//' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)//' > $line.summary; done
+ls *spike*out | sed 's/.spike.out//' | while read line; do awk -F"\t" '{print $2, "\t", $3}' $line.spike.out | sed 's/:.:.*\t/\t/' | sed 's/^M_//' | sed 's/^MT_//' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)$//' > $line.summary; done
 #just want to get taxonomic information from neanderthal and modern human
 awk -F"\t" '{print $3}' modHuman.out | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ /_/g' > modHuman.summary
 awk -F"\t" '{print $3}' neanderthal.out | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ /_/g' > neanderthal.summary
 cd ../kraken2
-ls *out | sed 's/.spike.out//' | while read line; do awk -F"\t" '{print $2, "\t", $3}' $line.spike.out | sed 's/:.:.*\t/\t/' | sed 's/^M_//' | sed 's/^MT_//' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)//' > $line.summary; done
+ls *out | sed 's/.spike.out//' | while read line; do awk -F"\t" '{print $2, "\t", $3}' $line.spike.out | sed 's/:.:.*\t/\t/' | sed 's/^M_//' | sed 's/^MT_//' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)$//' > $line.summary; done
 cd ../kraken3
-ls *out | sed 's/.spike.out//' | while read line; do awk -F"\t" '{print $2, "\t", $3}' $line.spike.out | sed 's/:.:.*\t/\t/' | sed 's/^M_//' | sed 's/^MT_//' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)//' > $line.summary; done
+ls *out | sed 's/.spike.out//' | while read line; do awk -F"\t" '{print $2, "\t", $3}' $line.spike.out | sed 's/:.:.*\t/\t/' | sed 's/^M_//' | sed 's/^MT_//' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)$//' > $line.summary; done
 cd ..
 ls kraken1/*out | parallel 'gzip {}' & 
 ls kraken2/*out | parallel 'gzip {}' & 
@@ -172,4 +172,11 @@ ls kraken3/*out | parallel 'gzip {}' &
 
 #add header line
 ls kraken*/*5* | while read line; do sed -i '1 i\count\tquery\tsubject\ttaxid' $line; done
-#merge taxonomy string from ncbi with kraken summaries
+sed -i -e '1 i\count\tsubject\ttaxid' -e 's/^[ \t]*//' -e 's/ /\t/' kraken1/modHuman.summary
+sed -i -e '1 i\count\tsubject\ttaxid' -e 's/^[ \t]*//' -e 's/ /\t/' kraken1/neanderthal.summary
+#no variation between kraken runs, continue with just the first run
+rm -r kraken2 kraken3
+#merge with taxonomy string
+cd kraken1
+ls | sed 's/.summary//' | parallel 'python ../scripts/merge_tax.py -i {}.summary -o {}.merged -t ../taxid_taxonomystr.txt'
+rm *summary
