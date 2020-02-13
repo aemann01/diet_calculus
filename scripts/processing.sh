@@ -178,5 +178,6 @@ sed -i -e '1 i\count\tsubject\ttaxid' -e 's/^[ \t]*//' -e 's/ /\t/' kraken1/nean
 rm -r kraken2 kraken3
 #merge with taxonomy string
 cd kraken1
+gzip -d ../taxid_taxonomystr.txt.gz 
 ls | sed 's/.summary//' | parallel 'python ../scripts/merge_tax.py -i {}.summary -o {}.merged -t ../taxid_taxonomystr.txt'
 rm *summary
