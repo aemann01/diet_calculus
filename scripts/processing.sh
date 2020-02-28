@@ -1,4 +1,5 @@
 #Data processing for dietary analysis of calculus paper
+#Author: Allison E. Mann 2020
 
 ###################
 #ENVIRONMENT SETUP
@@ -12,32 +13,94 @@ echo "Downloading data"
 cd mock_euks
 wget -i ../euk.ids -q &
 cd ../examples 
-wget -i ../examples.ids -q & ## TO DO--> direct download weyrich data
+wget -i ../examples.ids -q & 
 cd ../mock_oral
 wget -i ../bac.ids -q
 echo "Download complete"
 
+#############################
+#REMOVE CONTAMINATED CONTIGS
+#############################
+cd ../mock_euks
+ls *gz | parallel 'gzip -d {}'
+grep ">" *fna | awk -F":" '{print $2}' | sed 's/>//' | awk '{print $1}' > query.txt
+comm -12 <(sort query.txt) <(sort ../contaminated_genomes.Steinegger2020.txt) > contamination_hits.txt
+#how many contaminated contigs?
+wc -l contamination_hits.txt
+#how many contigs do we have per organism?
+grep ">" *fna -c
+# GCA_002197005.1_CerEla1.0_genomic.fna:11479
+# GCA_900519105.1_iwgsc_refseqv1.0_genomic.fna:22
+# GCF_000001405.39_GRCh38.p13_genomic.fna:639
+# GCF_000002315.6_GRCg6a_genomic.fna:464
+# GCF_000003025.6_Sscrofa11.1_genomic.fna:613
+# GCF_000003625.3_OryCun2.0_genomic.fna:3241
+# GCF_000005005.2_B73_RefGen_v4_genomic.fna:267
+# GCF_000188115.4_SL3.0_genomic.fna:3150
+# GCF_000233375.1_ICSASG_v2_genomic.fna:232155
+# GCF_000346465.2_Prunus_persica_NCBIv2_genomic.fna:192
+# GCF_003086295.2_arahy.Tifrunner.gnm1.KYV3_genomic.fna:385
+#remove contaminated seqs
+ls *fna | sed 's/.fna//' | while read line; do awk 'BEGIN{while((getline<"contamination_hits.txt")>0)l[">"$1]=1}/^>/{f=!l[$1]}f' $line.fna > $line.fix.fa; done
+#how much/who lost contigs?
+grep ">" *fix.fa -c
+# GCA_002197005.1_CerEla1.0_genomic.fix.fa:11460
+# GCA_900519105.1_iwgsc_refseqv1.0_genomic.fix.fa:19
+# GCF_000001405.39_GRCh38.p13_genomic.fix.fa:639
+# GCF_000002315.6_GRCg6a_genomic.fix.fa:464
+# GCF_000003025.6_Sscrofa11.1_genomic.fix.fa:613
+# GCF_000003625.3_OryCun2.0_genomic.fix.fa:3240
+# GCF_000005005.2_B73_RefGen_v4_genomic.fix.fa:267
+# GCF_000188115.4_SL3.0_genomic.fix.fa:3099
+# GCF_000233375.1_ICSASG_v2_genomic.fix.fa:232111
+# GCF_000346465.2_Prunus_persica_NCBIv2_genomic.fix.fa:192
+# GCF_003086295.2_arahy.Tifrunner.gnm1.KYV3_genomic.fix.fa:385
+#clean up
+rm *fna
+rename 's/.fix.fa/.fna/' *fa
+#now on bacterial contigs
+cd ../mock_oral 
+ls *gz | parallel 'gzip -d {}'
+grep ">" *fna | awk -F":" '{print $2}' | sed 's/>//' | awk '{print $1}' > query.txt
+comm -12 <(sort query.txt) <(sort ../contaminated_genomes.Steinegger2020.txt) > contamination_hits.txt
+#no contaminated contigs detected
+
 ###############
 #TAG SEQUENCES
 ###############
-name=$(awk '{print $2}' test.txt)
-file=$(awk '{print $1}' test.txt)
 tagSeq()
 {
     set $file
     for i in $name; do
-        sed -i "s/^>.*/>${i}/" ${1}
+        sed "s/^>/>${i}_/" ${1} > ${1}_fix
         shift
     done
 }
+name=$(awk '{print $2}' ../bac.rename)
+file=$(awk '{print $1}' ../bac.rename)
 tagSeq
-cat *fna > mock_oral.fa
-rm GCF_00*fna
-#now run on eukaryotic genomes
+rm *fna
+cat *fix > mock_oral.fa
+rm *fix
 cd ../mock_euks
-name=$(awk '{print $2}' test.txt)
-file=$(awk '{print $1}' test.txt)
+name=$(awk '{print $2}' ../euk.rename)
+file=$(awk '{print $1}' ../euk.rename)
 tagSeq
+#wheat has to be processed separately ()
+
+
+
+
+rm *fna
+cat *fix > mock_euks.fa
+rm *fix
+
+
+
+
+
+
+
 ls *gz | parallel 'gzip -d {}'
 # wheat has to be processed separately -- 14G genome compared to 1-2G
 mv GCA_900519105.1_iwgsc_refseqv1.0_genomic.fna ../sim/endo/
