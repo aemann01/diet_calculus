@@ -25,5 +25,5 @@ conda env create -f environment.yml
 - To load the environment run 
 
 ```bash
-conda env list qi_diet_dna_calculus
+conda activate qi_diet_dna_calculus
 ```
