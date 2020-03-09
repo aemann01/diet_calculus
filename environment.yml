@@ -1,0 +1,11 @@
+name: qi_diet_dna_calculus
+channels:
+  - defaults
+  - bioconda
+  - conda-forge
+dependencies:
+  - bioconda::kraken2=2.0.8_beta
+  - bioconda::adapterremoval=2.3.0
+  - bioconda::fastx_toolkit=0.0.14
+  - bioconda::vsearch=1.1.3
+  - bioconda::cutadapt=1.9.1
