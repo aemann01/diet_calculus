@@ -1,0 +1,8 @@
+taxid	taxonomy	count	query	subject
+1	root	2	Zmays	root
+1437183	cellular_organisms;Eukaryota;Viridiplantae;Streptophyta;Streptophytina;Embryophyta;Tracheophyta;Euphyllophyta;Spermatophyta;Magnoliophyta	3	Zmays	Mesangiospermae
+4575	cellular_organisms;Eukaryota;Viridiplantae;Streptophyta;Streptophytina;Embryophyta;Tracheophyta;Euphyllophyta;Spermatophyta;Magnoliophyta;Mesangiospermae;Liliopsida;Petrosaviidae;commelinids;Poales;Poaceae;PACMAD_clade;Panicoideae;Andropogonodae;Andropogoneae;Tripsacinae	15	Zmays	Zea
+15945	cellular_organisms;Eukaryota;Viridiplantae;Streptophyta;Streptophytina;Embryophyta;Tracheophyta;Euphyllophyta;Spermatophyta;Magnoliophyta;Mesangiospermae;Liliopsida;Petrosaviidae;commelinids;Poales;Poaceae;PACMAD_clade;Panicoideae;Andropogonodae;Andropogoneae;Tripsacinae;Zea	1	Zmays	Zea_luxurians
+4577	cellular_organisms;Eukaryota;Viridiplantae;Streptophyta;Streptophytina;Embryophyta;Tracheophyta;Euphyllophyta;Spermatophyta;Magnoliophyta;Mesangiospermae;Liliopsida;Petrosaviidae;commelinids;Poales;Poaceae;PACMAD_clade;Panicoideae;Andropogonodae;Andropogoneae;Tripsacinae;Zea	155	Zmays	Zea_mays
+381124	cellular_organisms;Eukaryota;Viridiplantae;Streptophyta;Streptophytina;Embryophyta;Tracheophyta;Euphyllophyta;Spermatophyta;Magnoliophyta;Mesangiospermae;Liliopsida;Petrosaviidae;commelinids;Poales;Poaceae;PACMAD_clade;Panicoideae;Andropogonodae;Andropogoneae;Tripsacinae;Zea;Zea_mays	2	Zmays	Zea_mays_subsp._mays
+0		322	Zmays	unclassified
