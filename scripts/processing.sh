@@ -225,9 +225,9 @@ ls *fa.gz | sed  's/.fa.gz//' | while read line; do kraken2 --db ~/reference_dat
 
 #get summary of dietary hits for each spike level output
 cd ../kraken
-ls *5k* | sed 's/.5k.spike.out//' | while read line; do grep $line $line.5k.spike.out | awk -F"\t" '{print $2, "\t", $3}' | sed 's/^M_//' | sed 's/^MT_//' | sed 's/_.*\t/\t/' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)$//' > 5k.spike.summary; done
-ls *5k* | sed 's/.5k.spike.out//' | while read line; do grep $line $line.500.spike.out | awk -F"\t" '{print $2, "\t", $3}' | sed 's/^M_//' | sed 's/^MT_//' | sed 's/_.*\t/\t/' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)$//' > 500.spike.summary; done
-ls *5k* | sed 's/.5k.spike.out//' | while read line; do grep $line $line.50.spike.out | awk -F"\t" '{print $2, "\t", $3}' | sed 's/^M_//' | sed 's/^MT_//' | sed 's/_.*\t/\t/' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)$//' > 50.spike.summary; done
+ls *5k* | sed 's/.5k.spike.out//' | while read line; do grep $line $line.5k.spike.out | awk -F"\t" '{print $2, "\t", $3}' | sed 's/^M_//' | sed 's/^MT_//' | sed 's/_.*\t/\t/' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)$//' >> 5k.spike.summary; done
+ls *5k* | sed 's/.5k.spike.out//' | while read line; do grep $line $line.500.spike.out | awk -F"\t" '{print $2, "\t", $3}' | sed 's/^M_//' | sed 's/^MT_//' | sed 's/_.*\t/\t/' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)$//' >> 500.spike.summary; done
+ls *5k* | sed 's/.5k.spike.out//' | while read line; do grep $line $line.50.spike.out | awk -F"\t" '{print $2, "\t", $3}' | sed 's/^M_//' | sed 's/^MT_//' | sed 's/_.*\t/\t/' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)$//' >> 50.spike.summary; done
 
 #bacterial summary
 awk -F"\t" '{print $2, "\t", $3}' Taestivum.50.spike.out | sed 's/^M_//' | sed 's/^MT_//' | sed 's/_.*\t/\t/' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)$//' > bacterial.summary
