@@ -231,7 +231,6 @@ ls *5k* | sed 's/.5k.spike.out//' | while read line; do grep $line $line.50.spik
 
 #bacterial summary
 awk -F"\t" '{print $2, "\t", $3}' Taestivum.50.spike.out | sed 's/^M_//' | sed 's/^MT_//' | sed 's/_.*\t/\t/' | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ //' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)$//' > bacterial.summary
-#filter out dietary reads later
 #summary for real samples
 awk -F"\t" '{print $3}' modHuman.trim.out | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)//g' > modHuman.summary &
 awk -F"\t" '{print $3}' neanderthal.trim.out | sort | uniq -c | sed 's/^[ \t]*//' | sed 's/ /\t/' | sed 's/ /_/g' | sed 's/_(taxid_/\t/' | sed 's/)//g' > neanderthal.summary &

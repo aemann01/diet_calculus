@@ -3,13 +3,13 @@
 ###################
 library(ggplot2)
 library(dplyr)
-setwd("/Users/mann/github/diet_calculus/results/reports")
+setwd("/Users/mann/github/diet_calculus/results")
 
 ####################
 #LOAD & FORMAT DATA
 ####################
 dat <- read.table("counts_forR.txt", header=T)
-dat$Level <- factor(dat$Level, levels=c("Species", "Genus", "Other", "Unclassified"))
+dat$Level <- factor(dat$Level, levels=c("species", "genus", "other", "unassigned"))
 samp.list <- levels(dat$Sample)
 
 ###############################
@@ -42,6 +42,9 @@ for(i in 1:length(samp.list)){
     dev.off()
 }
 
+####################
+#BAC SANKEY DIAGRAM
+####################
 
 
 
