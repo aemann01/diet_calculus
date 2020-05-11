@@ -9,3 +9,4 @@ dependencies:
   - bioconda::fastx_toolkit=0.0.14
   - bioconda::vsearch=1.1.3
   - bioconda::cutadapt=1.9.1
+  - bioconda::gargammel=1.1.2
