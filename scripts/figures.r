@@ -3,6 +3,7 @@
 ###################
 library(ggplot2)
 library(dplyr)
+library(riverplot)
 setwd("/Users/mann/github/diet_calculus/results")
 
 ####################
@@ -41,12 +42,4 @@ for(i in 1:length(samp.list)){
     print(p)
     dev.off()
 }
-
-####################
-#BAC SANKEY DIAGRAM
-####################
-
-
-
-
 
