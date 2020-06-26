@@ -20,7 +20,7 @@ Weyrich et al. 2017, Nature).
 
 Links
 CS40: ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR300/009/ERR3003649/ERR3003649_{1,2}.fastq.gz
-Nod1-1h-nonU: ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR488/000/SRR4885940/SRR4885940_{1,2}.fastq.gz
+Nod1-1h-nonU: ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR488/000/SRR4885940/SRR4885939_{1,2}.fastq.gz
 COD003: ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR194/002/ERR1943572/ERR1943572_{1,2}.fastq.gz
 NE2: ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR118/002/SRR1187682/SRR1187682.fastq.gz
 
@@ -48,12 +48,12 @@ nextflow run nf-core/eager -r 2.1.0 \
 -name 'qi-t_forsythia'
 
 cd ../g_vaginalis
-wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR488/000/SRR4885940/SRR4885940_{1,2}.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR488/000/SRR4885940/SRR4885939_{1,2}.fastq.gz
 nextflow run nf-core/eager -r 2.1.0 \
 -profile shh,sdag \
 -with-tower \
 --email fellows@shh.mpg.de \
---reads 'SRR4885940_{1,2}.fastq.gz' \
+--reads 'SRR4885939_{1,2}.fastq.gz' \
 --fasta 'https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/159/155/GCF_000159155.2_ASM15915v2/GCF_000159155.2_ASM15915v2_genomic.fna.gz'   \
 --paired_end \
 -name 'qi-g_vaginalis'
