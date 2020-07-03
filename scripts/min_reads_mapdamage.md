@@ -103,8 +103,8 @@ cd analysis/min_reads_damage/
 for i in t_forsythia g_vaginalis g_morhua h_sapiens; do
     mkdir -p "$i"/downsampling/raw_bam "$i"/downsampling/downsampled_bams "$i"/downsampling/damageprofiles
     cd "$i"/downsampling/raw_bam
-    ln -s ../../deduplication/*/*bam .
-    cd ../../
+    ln -s ../../results/deduplication/*/*bam .
+    cd ../../../
 done
 
 
