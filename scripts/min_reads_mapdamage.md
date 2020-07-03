@@ -70,7 +70,7 @@ nextflow run nf-core/eager -r 2.1.0 \
 -name 'qi-g_morhua'
 
 cd ../h_sapiens
-
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR118/002/SRR1187682/SRR1187682.fastq.gz
 nextflow run nf-core/eager -r 2.1.0 \
 -profile shh,sdag \
 -with-tower \
