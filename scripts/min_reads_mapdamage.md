@@ -151,10 +151,10 @@ As the lowest number of mapped reads is in _G. vaginalis_, we will not go
 higher than 10k reads.
 
 ```bash
-## Taken from
+## Taken from https://www.biostars.org/p/145820/#145830
 for i in */downsampling/raw_bam/*bam; do
     echo "$i"
-    for j in 25 50 100 200 500 1000 2000 5000; do
+    for j in 25 50 100 200 500 1000 2000 5000 10000; do
         ## Extract header then the reads themselves which are subsampled
         cat <(samtools view -F 4 -SH "$i") <(samtools view -S "$i" | shuf -n "$j") | samtools view -S -b - > "${i%%.bam}"-"$j"reads.bam
     done
@@ -171,40 +171,32 @@ done
 
 ```
 
-Now we can generate damage profiles for each BAM file.
+Now we can generate damage profiles for each BAM file. 
 
 ```bash
-cd t_forsythia
-for i in $(find -type f -name '*reads.bam'); do
+for i in $(find t_forsythia/ -type f -name '*reads.bam'); do
     dir="$(dirname $i)"
     file="$(basename $i)"
     damageprofiler -i "$i" -o "${dir/downsampled_bams/damageprofiles}"/ -r GCF_000238215.1_ASM23821v1_genomic.fna.gz -s t_forsythia
 done
-cd ../
 
-cd ../g_vaginalis
-for i in $(find -type f -name '*reads.bam'); do
+for i in $(find g_vaginalis/ -type f -name '*reads.bam'); do
     dir="$(dirname $i)"
     file="$(basename $i)"
     damageprofiler -i "$i" -o "${dir/downsampled_bams/damageprofiles}"/ -r GCF_000159155.2_ASM15915v2_genomic.fna.gz -s g_vaginalis
 done
-cd ../
 
-cd ../g_morhua
-for i in $(find -type f -name '*reads.bam'); do
+for i in $(find g_morhua/ -type f -name '*reads.bam'); do
     dir="$(dirname $i)"
     file="$(basename $i)"
     damageprofiler -i "$i" -o "${dir/downsampled_bams/damageprofiles}"/ -r GCF_902167405.1_gadMor3.0_genomic.fna.gz -s g_morhua
 done
-cd ../
 
-cd ../h_sapiens
-for i in $(find -type f -name '*reads.bam'); do
+for i in $(find g_sapiens -type f -name '*reads.bam'); do
     dir="$(dirname $i)"
     file="$(basename $i)"
     damageprofiler -i "$i" -o "${dir/downsampled_bams/damageprofiles}"/ -r SRR1187682.fastq.gz -s h_sapiens
 done
-cd ../
 
 ```
 
