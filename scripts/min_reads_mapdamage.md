@@ -13,6 +13,19 @@ downscale them to small numbers of molecules that are within the ranges of
 previously reported dietary studies (e.g. Warinner et al. 2014, Nat. Genet. and
 Weyrich et al. 2017, Nature).
 
+## Set up
+
+First we will set up the conda environment containing the tools in the root
+directory of this repository.
+
+```bash
+
+conda create env -f environment-damage_demonstration.yml
+
+## Once installed
+conda activate qi_diet_dna_calculus-damage_demonstration
+```
+
 
 ## Data
 
@@ -53,52 +66,57 @@ BAM for downstream analysis.
 >  [nf-co.re](https://nf-co.re).
 
 ```bash
-mkdir -p analysis/min_reads_damage
+mkdir -p analysis/min_reads_damage/
+cd analysis/min_reads_damage/
 mkdir t_forsythia g_vaginalis g_morhua h_sapiens
 
 
 cd t_forsythia
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/238/215/GCF_000238215.1_ASM23821v1/GCF_000238215.1_ASM23821v1_genomic.fna.gz
 wget ftp.sra.ebi.ac.uk/vol1/fastq/SRR687/003/SRR6877313/SRR6877313_{1,2}.fastq.gz
 nextflow run nf-core/eager -r 2.1.0 \
 -profile shh,sdag \
 -with-tower \
 --email fellows@shh.mpg.de \
 --reads 'SRR6877313_{1,2}.fastq.gz' \
---fasta 'https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/238/215/GCF_000238215.1_ASM23821v1/GCF_000238215.1_ASM23821v1_genomic.fna.gz' \
+--fasta 'GCF_000238215.1_ASM23821v1_genomic.fna.gz' \
 --paired_end \
 --save_reference \
 -name 'qi-t_forsythia'
 
 cd ../g_vaginalis
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR488/000/SRR4885940/SRR4885939_{1,2}.fastq.gz
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/159/155/GCF_000159155.2_ASM15915v2/GCF_000159155.2_ASM15915v2_genomic.fna.gz
 nextflow run nf-core/eager -r 2.1.0 \
 -profile shh,sdag \
 -with-tower \
 --email fellows@shh.mpg.de \
 --reads 'SRR4885939_{1,2}.fastq.gz' \
---fasta 'https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/159/155/GCF_000159155.2_ASM15915v2/GCF_000159155.2_ASM15915v2_genomic.fna.gz'   \
+--fasta 'GCF_000159155.2_ASM15915v2_genomic.fna.gz'   \
 --paired_end \
 -name 'qi-g_vaginalis'
 
 cd ../g_morhua
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR194/002/ERR1943572/ERR1943572_{1,2}.fastq.gz
+https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_other/Gadus_morhua/representative/GCF_902167405.1_gadMor3.0/GCF_902167405.1_gadMor3.0_genomic.fna.gz
 nextflow run nf-core/eager -r 2.1.0 \
 -profile shh,sdag \
 -with-tower \
 --email fellows@shh.mpg.de \
 --reads 'ERR1943572_{1,2}.fastq.gz' \
---fasta 'https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_other/Gadus_morhua/representative/GCF_902167405.1_gadMor3.0/GCF_902167405.1_gadMor3.0_genomic.fna.gz'   \
+--fasta 'GCF_902167405.1_gadMor3.0/GCF_902167405.1_gadMor3.0_genomic.fna.gz'   \
 --paired_end \
 -name 'qi-g_morhua'
 
 cd ../h_sapiens
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR118/002/SRR1187682/SRR1187682.fastq.gz
+wget https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz
 nextflow run nf-core/eager -r 2.1.0 \
 -profile shh,sdag \
 -with-tower \
 --email fellows@shh.mpg.de \
 --reads 'SRR1187682.fastq.gz' \
---fasta 'https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz'   \
+--fasta 'hg19.fa.gz'   \
 --single_end \
 -name 'qi-h_sapiens'
 
@@ -106,7 +124,10 @@ cd ..
 
 ```
 
-Once complete we will place the deduplicated files in a new directory.
+This will take some time.
+
+Once complete we will place the deduplicated files in a new directory. Again
+starting in the root directory of this repository.
 
 ```bash
 cd analysis/min_reads_damage/
@@ -117,18 +138,74 @@ for i in t_forsythia g_vaginalis g_morhua h_sapiens; do
     cd ../../../
 done
 
-
-f
 ```
 
 
 ## Downsampling
 
 To use our BAMs we will use `samtools` and a GNU CoreUtils utility `shuf` (not
-in the environment due to depdendncy conflicts) to randomly extract reads, and
-then use `DamageProfiler` to generate the damage patterns. 
+in the environment due to depdendncy conflicts) to randomly extract aligned 
+reads, and then use `DamageProfiler` to generate the damage patterns.
+
+As the lowest number of mapped reads is in _G. vaginalis_, we will not go
+higher than 10k reads.
+
+```bash
+## Taken from
+for i in */downsampling/raw_bam/*bam; do
+    echo "$i"
+    for j in 25 50 100 200 500 1000 2000 5000; do
+        ## Extract header then the reads themselves which are subsampled
+        cat <(samtools view -F 4 -SH "$i") <(samtools view -S "$i" | shuf -n "$j") | samtools view -S -b - > "${i%%.bam}"-"$j"reads.bam
+    done
+done
+```
+
+Once generated, we can put each in a fresh folder (couldn't do that in the 
+previous command due to weird symlink issues))
+
+```bash
+for i in $(find -type f -name '*reads.bam'); do
+    mv "$i" "${i/raw_bam/downsampled_bams}";
+done
 
 ```
-## Taken from
-cat <(samtools view -SH input.sam) <(samtools view -S input.sam | shuf -n 1000000) > output.sam
+
+Now we can generate damage profiles for each BAM file.
+
+```bash
+cd t_forsythia
+for i in $(find -type f -name '*reads.bam'); do
+    dir="$(dirname $i)"
+    file="$(basename $i)"
+    damageprofiler -i "$i" -o "${dir/downsampled_bams/damageprofiles}"/ -r GCF_000238215.1_ASM23821v1_genomic.fna.gz -s t_forsythia
+done
+cd ../
+
+cd ../g_vaginalis
+for i in $(find -type f -name '*reads.bam'); do
+    dir="$(dirname $i)"
+    file="$(basename $i)"
+    damageprofiler -i "$i" -o "${dir/downsampled_bams/damageprofiles}"/ -r GCF_000159155.2_ASM15915v2_genomic.fna.gz -s g_vaginalis
+done
+cd ../
+
+cd ../g_morhua
+for i in $(find -type f -name '*reads.bam'); do
+    dir="$(dirname $i)"
+    file="$(basename $i)"
+    damageprofiler -i "$i" -o "${dir/downsampled_bams/damageprofiles}"/ -r GCF_902167405.1_gadMor3.0_genomic.fna.gz -s g_morhua
+done
+cd ../
+
+cd ../h_sapiens
+for i in $(find -type f -name '*reads.bam'); do
+    dir="$(dirname $i)"
+    file="$(basename $i)"
+    damageprofiler -i "$i" -o "${dir/downsampled_bams/damageprofiles}"/ -r SRR1187682.fastq.gz -s h_sapiens
+done
+cd ../
+
 ```
+
+Now the you can run the R notebook XXXX to see the visualisation of these.
