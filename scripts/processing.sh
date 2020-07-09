@@ -205,8 +205,6 @@ grep ">" samples/*spike*fa -c
 rm -r temp
 mv neanderthal.trim.fa *calc*trim* modHuman.trim.fa samples/
 
-## TO DO--> put clean up step here, only keep files you need
-
 #######################
 #KRAKEN DATABASE BUILD
 #######################
