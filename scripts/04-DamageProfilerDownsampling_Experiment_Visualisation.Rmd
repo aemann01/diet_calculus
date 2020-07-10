@@ -1,0 +1,234 @@
+---
+title: "Low Read Count and Damage Profile Experiment"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Background
+
+This notebook generates the visualisation of experiment on downscaling mapped-read BAM files to low-numbers of reads (typical found in dietary detection) on damageprofiles. Please see the `04-DamageProfilerDownsampling_Experiment_Processing.md` for mapping, downsampling and DamageProfile generation.
+
+# Preparation
+
+We will use the data.table and tidyverse collection of packages for data loading, manipulation and plotting.
+
+```{r}
+## These packages will need to be installed in your R installation in the conda environment manually, as 
+## the conda versions didn't set up sub-dependencies properly.
+library(data.table)## for faster loading
+library(tidyverse)
+library(patchwork) ## extra plotting help
+```
+
+# Data Loading and Cleaning
+
+## Common Data
+
+As we are going to generate two datasets, one with the original damageprofiles and a second with the downscaled profiles, and they have some common data, we
+will set some defaults first.
+
+```{r}
+## Convert unix string to Linnean name format!
+make_linnean <- function(x){
+  string <- str_split(x, "_") %>% unlist
+  paste0(toupper(string[1]), ". ", string[2])
+}
+
+## For improved ordering
+reference_order <- c("H. sapiens", "G. morhua", "G. vaginalis", "T. forsythia")
+type_colours <- c("C>T" = "red", "G>A" = "blue", "A>C" = "grey", "A>G" = "grey", "A>T" = "grey", "C>A" = "grey", "C>G" = "grey", "G>C" = "grey", "G>T" = "grey", "T>A" = "grey", "T>C" = "grey",	"T>G" = "grey", "insertion" = "purple", "deletion" = "green")
+
+```
+
+## Original Damage Profile
+
+First we can load the original profiles to display
+
+```{r eval = F}
+data_original_raw <-  Sys.glob("../analysis//min_reads_damage/*/results/damageprofiler/*/") %>%
+  list.files("5p_freq_misincorporations.txt", full.names = T) %>%
+  enframe(name = NULL, value = "file") %>%
+  mutate(contents = map(file, ~fread(.x) %>% as_tibble))
+
+## Extra info extaction
+data_original_clean <- data_original_raw %>% 
+  mutate(reference = map(file, ~str_extract(.x, "_damage\\/(.*)(?:\\/results)") %>% gsub("_damage/", "", .) %>% gsub("/results", "", .)) %>% unlist) %>%
+  select(reference, contents)
+```
+
+We can now clean this up to make visualisation better, and save so someone can load the data without having to generate their own BAMs.
+
+```{r eval = F}
+data_original_clean <- data_original_clean %>%
+  unnest(contents) %>%
+  rename(insertion = `->ACGT`, deletion = `ACGT>-`, Position = Pos) %>%
+  pivot_longer(contains(c(">", "insertion", "deletion")), names_to = "Mutation Type", values_to = "Frequency") %>%
+  mutate(`Mutation Type` = factor(`Mutation Type`, levels = rev(names(type_colours))),
+         reference = map(reference, make_linnean) %>% unlist,
+         reference = factor(reference, levels = reference_order))
+
+save(x = data_original_clean, file = "../results/04-DamageProfilerDownsampling_Experiment_Files/damage_original_damageprofiles.robj")
+```
+
+## Downsampled Damage Profiler
+
+To speed up processing we will load each species separately and bind. We will extract the other metadata about each profile from the file paths.
+
+> The next three code blocks are set to eval = F, as these can take a long time to load. Pre-made input data for plotting can be seen below
+
+```{r eval = F}
+## Loading each separately as it speeds up listing of files
+g_morhua_data <- Sys.glob("../analysis/min_reads_damage/g_morhua/downsampling/damageprofiles/*/*") %>%
+  list.files("5p_freq_misincorporations.txt", full.names = T) %>%
+  enframe(name = NULL, value = "file") %>%
+  mutate(contents = map(file, ~fread(.x) %>% as_tibble))
+
+g_vaginalis_data <- Sys.glob("../analysis/min_reads_damage/g_vaginalis/downsampling/damageprofiles/*/*") %>%
+  list.files("5p_freq_misincorporations.txt", full.names = T) %>%
+  enframe(name = NULL, value = "file") %>%
+  mutate(contents = map(file, ~fread(.x) %>% as_tibble))
+
+h_sapiens_data <- Sys.glob("../analysis/min_reads_damage/h_sapiens/downsampling/damageprofiles/*/*") %>%
+  list.files("5p_freq_misincorporations.txt", full.names = T) %>%
+  enframe(name = NULL, value = "file") %>%
+  mutate(contents = map(file, ~fread(.x) %>% as_tibble))
+
+t_forsythia_data <- Sys.glob("../analysis/min_reads_damage/t_forsythia/downsampling/damageprofiles/*/*") %>%
+  list.files("5p_freq_misincorporations.txt", full.names = T) %>%
+  enframe(name = NULL, value = "file") %>%
+  mutate(contents = map(file, ~fread(.x) %>% as_tibble))
+
+data_raw <- bind_rows(g_morhua_data, g_vaginalis_data, h_sapiens_data, t_forsythia_data)
+
+## Extra info extaction
+data_clean <- data_raw %>% 
+  mutate(reads = map(file, ~str_extract(.x, "rmdup-\\d*(?:reads)") %>% gsub("rmdup-|reads", "", .)) %>% unlist %>% as.integer(),
+         reference = map(file, ~str_extract(.x, "rep/(.*)_null") %>% gsub("rep/|_null", "", .)) %>% unlist,
+         repetition = map(file, ~str_extract(.x, "reads-\\d*(?:rep)") %>% gsub("reads-|rep", "", .) %>% unlist %>% as.integer()) %>% unlist) %>% 
+  select(reference, reads, repetition, contents)
+```
+
+As input validation, we will check if we have equal numbers of profiles per reference and reads amounts.
+
+```{r eval = F}
+## Validation we load all the data we expect (100 per reference/read combination)!
+data_clean %>% 
+  select(-contents) %>% 
+  group_by(reference, reads) %>% 
+  summarise(reps = n())
+```
+
+For some of the lower levels of reads for **G. vaginalis** and **T. forsythia**
+we appear to not have enough repetitions. This appears to be because DamageProfiler was
+unable to get enough information from some of the subsampled BAMs to generate
+a profile, likely because of the low coverage nature of the genomes. This also
+highlights the challenges of retrieving enough information for aDNA 
+authentication. However, we can continue with these anyway.
+
+Next we clean up some of the DamageProfiler output to make plotting more effective. We will also save the file for downstream processing as an R object (to
+preserve the ordering information)
+
+```{r eval = F}
+## Convert to long format, and apply the reordering things (with better names) to match typical DamageProfiler output
+data_complete <- data_clean %>%
+  unnest(contents) %>%
+  rename(insertion = `->ACGT`, deletion = `ACGT>-`, Position = Pos) %>%
+  pivot_longer(contains(c(">", "insertion", "deletion")), names_to = "Mutation Type", values_to = "Frequency") %>%
+  mutate(`Mutation Type` = factor(`Mutation Type`, levels = rev(names(type_colours))),
+         reference = map(reference, make_linnean) %>% unlist,
+         reference = factor(reference, levels = reference_order))
+
+save(x = data_complete, file = "../results/04-DamageProfilerDownsampling_Experiment_Files/damage_downscaling_damageprofiles.robj")
+  
+```
+
+# Visualisation
+
+## Original Damage Profiles
+
+We can re-load pre-made data if you don't wish to generate the BAM files yourself.
+
+```{r}
+load("../results/04-DamageProfilerDownsampling_Experiment_Files/damage_original_damageprofiles.robj")
+```
+
+And plot 
+
+```{r}
+original_figure <- ggplot(data_original_clean, aes(Position, Frequency, colour = `Mutation Type`)) +
+  geom_line() +
+  theme_minimal(base_size = 10) +
+  ylim(0, 0.30) +
+  scale_colour_manual(values = type_colours, guide = guide_legend(reverse = TRUE)) +
+  scale_x_continuous(breaks = seq(0, 25, 10)) +
+  facet_wrap(~ reference, ncol = 1, strip.position = "right") +
+  theme(legend.position = "right",
+        strip.background = element_rect(color = "black"))
+
+original_figure
+```
+
+
+## Downsampled Damage Profiles
+
+We can again re-load pre-made data if you don't wish to generate the BAM files yourself.
+
+```{r}
+load("../results/04-DamageProfilerDownsampling_Experiment_Files/damage_downscaling_damageprofiles.robj")
+```
+
+
+Finally, to plot, we will plot only the C>T mutations to reduce overplotting
+
+```{r}
+downsampling_aggregated_figure <- ggplot(data_complete %>% group_by(repetition) %>% filter(`Mutation Type` == "C>T"), 
+       aes(Position, Frequency, colour = `Mutation Type`, group = repetition)) +
+  geom_line(alpha = 0.1) +
+  theme_minimal(base_size = 10) +
+  ylim(0, 0.30) +
+  scale_colour_manual(values = type_colours, guide = guide_legend(reverse = TRUE)) +
+  scale_x_continuous(breaks = seq(0, 25, 10)) +
+  facet_grid(reference ~ reads) +
+  theme(legend.position = "bottom",
+        strip.background = element_rect(color = "black"))
+
+downsampling_aggregated_figure
+```
+
+An example of a full damage profile of a single BAM file with other mutations can be seen here:
+
+```{r}
+downsampling_single_figure <- ggplot(data_complete %>% filter(repetition == 12), 
+       aes(Position, Frequency, colour = `Mutation Type`)) +
+  geom_line() +
+  theme_minimal(base_size = 10) +
+  ylim(0, 0.30) +
+  scale_colour_manual(values = type_colours, guide = guide_legend(reverse = TRUE)) +
+  scale_x_continuous(breaks = seq(0, 25, 10)) +
+  facet_grid(reference ~ reads) +
+  theme(legend.position = "right",
+        strip.background = element_rect(color = "black"))
+
+downsampling_single_figure
+```
+
+
+## Combined
+
+Now we can make a final figure for the main text, which compares the downsampled BAMs and the original one.
+
+```{r, fig.height = 3.5}
+final_figure <- downsampling_aggregated_figure + theme(legend.position = "none") + original_figure + plot_layout(widths = c(12,2)) + plot_annotation(tag_levels = "a")
+
+ggsave("Figure_Downscaled_vs_Original_DamageProfile.pdf", width = 7, height = 4, units = "in", path = "../results/04-DamageProfilerDownsampling_Experiment_Files/", plot = final_figure, device = cairo_pdf())
+ggsave("Figure_Downscaled_vs_Original_DamageProfile.png", path = "../results/04-DamageProfilerDownsampling_Experiment_Files/", width = 7, height = 3.5, units = "in", dpi = 600, plot = final_figure,  device = png)
+```
+
+We can also save the single downsampling 'full profile' example as a supplementary figure.
+
+```{r}
+ggsave("SuppFigure_Downscaled_FullExample_DamageProfile.pdf", width = 7, height = 4, units = "in", path = "../results/04-DamageProfilerDownsampling_Experiment_Files", plot = downsampling_single_figure, device = cairo_pdf())
+ggsave("SuppFigure_Downscaled_FullExample_DamageProfile.png", path = "../results/04-DamageProfilerDownsampling_Experiment_Files/", width = 7, height = 3.5, units = "in", dpi = 600, plot = downsampling_single_figure,  device = png)
+```
+
