@@ -239,4 +239,4 @@ done
 
 ```
 
-Now the you can run the R notebook 04-DamageProfilerDownsampling_Experiment_Visualisation.md.Rmd to see the visualisation of these.
+Now the you can run the R notebook XXXX to see the visualisation of these.
