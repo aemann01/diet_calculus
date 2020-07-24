@@ -1,8 +1,8 @@
 ##################
 #ENVIRONMENT SETUP
 ##################
-library(ggplot2)
-library(dplyr)
+library(ggplot2) # v.3.3.0
+library(dplyr) # v.0.8.5
 setwd("~/diet_calculus/results")
 ###################
 #LOAD & FORMAT DATA
