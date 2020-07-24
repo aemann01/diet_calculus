@@ -11,3 +11,5 @@ dependencies:
   - bioconda::cutadapt=1.9.1
   - bioconda::gargammel=1.1.2
   - bioconda::nextflow=20.04.1
+  - bioconda::bowtie2=2.2.9
+  - bioconda::mapdamage2=2.1.0
