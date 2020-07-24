@@ -1,0 +1,10 @@
+name: qi_diet_dna_calculus-damage_demonstration
+channels:
+  - defaults
+  - bioconda
+  - conda-forge
+dependencies:
+  - bioconda::nextflow=20.04.1 
+  - bioconda::samtools=1.10
+  - bioconda::damageprofiler=0.4.9
+  - conda-forge::r-base=3.6.3
