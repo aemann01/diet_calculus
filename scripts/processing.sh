@@ -248,3 +248,18 @@ gzip -d ../taxid_taxonomystr.txt.gz
 ls *summary | sed 's/.summary//' | parallel 'python ../merge_tax.py -i {}.summary -o {}.merged -t ../taxid_taxonomystr.txt'
 # rm *summary
 
+############
+#MMAPDAMAGE
+############
+wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.39_GRCh38.p13/GCF_000001405.39_GRCh38.p13_genomic.fna.gz
+gzip -d GCF_000001405.39_GRCh38.p13_genomic.fna.gz
+bowtie2-build GCF_000001405.39_GRCh38.p13_genomic.fna .db
+bowtie2 -x .db -U ERR2900752.collapsed.gz -S err2900752.sam --end-to-end --no-unal
+bowtie2 -x .db -U modHuman.collapsed.gz -S modHuman.sam --end-to-end --no-unal
+mapDamage -i err2900752.sam -r GCF_000001405.39_GRCh38.p13_genomic.fna -d err2900752
+mapDamage -i modHuman.sam -r GCF_000001405.39_GRCh38.p13_genomic.fna -d modHuman
+
+
+
+
+

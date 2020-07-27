@@ -99,3 +99,15 @@ cor(dat$Value, dat$Genome_size.Mb.)
 dat <- read.table("correlation_50_size.txt", header=T)
 cor(dat$Value, dat$Genome_size.Mb.)
 # [1] -0.1004729
+
+################
+#MAPDAMAGE PLOTS
+################
+dat <- read.table("modHuman/5pCtoT_freq.txt", header=T)
+dat2 <- read.table("err2900752/5pCtoT_freq.txt", header=T)
+pdf("modhuman.plot.pdf")
+ggplot(dat, aes(x=pos, y=X5pC.T)) + geom_line() + ylim(c(0.0, 0.3)) + theme_minimal()
+dev.off()
+pdf("ancient.plot.pdf")
+ggplot(dat2, aes(x=pos, y=X5pC.T)) + geom_line() + ylim(c(0.0, 0.3)) + theme_minimal()
+dev.off()
