@@ -65,28 +65,22 @@ ggplot(dat.r, aes(x=Num_genomes, y=log10(Value),
 	ylab("log10(Read count at species)")
 # correlation across just the 5k reads (since that might be jacking it up)
 dat <- read.table("correlation_5k.txt", header=T)
-cor(dat$Value, dat$Num_genomes)
-# [1] 0.7354407
+cor(dat$Value, dat$Num_genomes, method="spearman")
 # without human
 dat.r <- dat[-c(4),]
-cor(dat.r$Value, dat.r$Num_genomes)
-# [1] 0.8885117
+cor(dat.r$Value, dat.r$Num_genomes, method="spearman")
 # 500 reads
 dat <- read.table("correlation_500.txt", header=T)
-cor(dat$Value, dat$Num_genomes)
-# [1] 0.7251793
+cor(dat$Value, dat$Num_genomes, method="spearman")
 # without human
 dat.r <- dat[-c(4),]
-cor(dat.r$Value, dat.r$Num_genomes)
-# [1] 0.883547
+cor(dat.r$Value, dat.r$Num_genomes, method="spearman")
 # 50 reads
 dat <- read.table("correlation_50.txt", header=T)
-cor(dat$Value, dat$Num_genomes)
-# [1] 0.7592194
+cor(dat$Value, dat$Num_genomes, method="spearman")
 # without human
 dat.r <- dat[-c(4),]
-cor(dat.r$Value, dat.r$Num_genomes)
-# [1] 0.8511068
+cor(dat.r$Value, dat.r$Num_genomes, method="spearman")
 ########################
 #GENOME SIZE CORRELATION
 ########################
