@@ -1,5 +1,7 @@
 # Analysis - Minimum Reads Required for Damage Signal
 
+By James A. Fellows Yates
+
 ## Introduction
 
 One of the challenges in validating putative ancient dietary sequences from

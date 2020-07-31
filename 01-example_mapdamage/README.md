@@ -26,8 +26,9 @@ and modern human and mapped them against a human reference genome.
 
 To download the raw sequencing data of the two samples:
 
+<!-- Allie: we are missing the samples downloading commands below -->
+
 ```bash
-## Instructions missing!
 ```
 
 To download the human reference genome and unzip:

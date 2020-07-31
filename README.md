@@ -21,14 +21,20 @@ git clone https://github.com/aemann01/diet_calculus.git && cd diet_calculus/
 - Run the following command to install the one of the environments
 
 ```bash
-conda env create -f environment-damage_demonstration.yml
+conda env create -f environment.yml
 
 ```
 
 - To load a given environment run
 
 ```bash
-conda activate <analysis>/mann2020_<example>.yml
+conda activate mann2020_<analysis_name>
+```
+
+- To turn off the environment run
+
+```bash
+conda deactivate
 ```
 
 ## Structure

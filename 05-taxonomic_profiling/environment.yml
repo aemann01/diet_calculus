@@ -1,0 +1,9 @@
+name: man2020-taxonomic_profiling
+channels:
+  - defaults
+  - bioconda
+  - conda-forge
+dependencies:
+  - bioconda::kraken2=2.0.8_beta
+
+
