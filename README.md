@@ -1,4 +1,6 @@
-# diet_calculus
+## Do I have something in my teeth? The trouble with genetic analyses of diet from archaeological dental calculus
+
+Allison E. Mann, James A. Fellows Yates, Zandra Fagernäs, Rita M. Austin, Elizabeth A. Nelson, Courtney A. Hofman
 
 This repository describes the analysis performed in the paper Mann _et al._ XXX.
 
