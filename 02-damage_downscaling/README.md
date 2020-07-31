@@ -1,6 +1,6 @@
 # Analysis - Minimum Reads Required for Damage Signal
 
-## Rationale
+## Introduction
 
 One of the challenges in validating putative ancient dietary sequences from
 dental calculus is often that there are very few molecules, making
@@ -20,13 +20,15 @@ directory of this repository.
 
 ```bash
 
-conda create env -f environment-damage_demonstration.yml
+conda create env -f mann2020_damagedownscaling.yml
 
 ## Once installed
-conda activate qi_diet_dna_calculus-damage_demonstration
+conda activate mann2020_damagedownscaling.yml
 ```
 
 ## Data
+
+The data used in this analysis is as follows:
 
 | Type | Publication | Genome | Sample | ENA Accession |
 |------|-------------|--------|-------|---------------|
@@ -37,28 +39,37 @@ conda activate qi_diet_dna_calculus-damage_demonstration
 
 Sequencing Reads:
 
-- COD003: [ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR194/002/ERR1943572/ERR1943572_{1,2}.fastq.gz](ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR194/002/ERR1943572/ERR1943572_{1,2}.fastq.gz)
-- Nod1-1h-nonU: [ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR488/000/SRR4885940/SRR4885939_{1,2}.fastq.gz](ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR488/000/SRR4885940/SRR4885939_{1,2}.fastq.gz)
-- NE2: [ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR118/002/SRR1187682/SRR1187682.fastq.gz](ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR118/002/SRR1187682/SRR1187682.fastq.gz)
-- AO86: [ftp.sra.ebi.ac.uk/vol1/fastq/SRR687/003/SRR6877313/SRR6877313_{1,2}.fastq.gz](ftp.sra.ebi.ac.uk/vol1/fastq/SRR687/003/SRR6877313/SRR6877313_{1,2}.fastq.gz)
+- COD003:
+  [ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR194/002/ERR1943572/ERR1943572_{1,2}.fastq.gz](ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR194/002/ERR1943572/ERR1943572_{1,2}.fastq.gz)
+- Nod1-1h-nonU:
+  [ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR488/000/SRR4885940/SRR4885939_{1,2}.fastq.gz](ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR488/000/SRR4885940/SRR4885939_{1,2}.fastq.gz)
+- NE2:
+  [ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR118/002/SRR1187682/SRR1187682.fastq.gz](ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR118/002/SRR1187682/SRR1187682.fastq.gz)
+- AO86:
+  [ftp.sra.ebi.ac.uk/vol1/fastq/SRR687/003/SRR6877313/SRR6877313_{1,2}.fastq.gz](ftp.sra.ebi.ac.uk/vol1/fastq/SRR687/003/SRR6877313/SRR6877313_{1,2}.fastq.gz)
 
 Reference Genomes:
 
-- G_morhua: [https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_other/Gadus_morhua/representative/GCF_902167405.1_gadMor3.0/GCF_902167405.1_gadMor3.0_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_other/Gadus_morhua/representative/GCF_902167405.1_gadMor3.0/GCF_902167405.1_gadMor3.0_genomic.fna.gz)
-- G_vaginalis: [https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/159/155/GCF_000159155.2_ASM15915v2/GCF_000159155.2_ASM15915v2_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/159/155/GCF_000159155.2_ASM15915v2/GCF_000159155.2_ASM15915v2_genomic.fna.gz)
-- H_sapiens: [https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz](https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz)
-- T_forsythia: [https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/238/215/GCF_000238215.1_ASM23821v1/GCF_000238215.1_ASM23821v1_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/238/215/GCF_000238215.1_ASM23821v1/GCF_000238215.1_ASM23821v1_genomic.fna.gz)
+- G_morhua:
+  [https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_other/Gadus_morhua/representative/GCF_902167405.1_gadMor3.0/GCF_902167405.1_gadMor3.0_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_other/Gadus_morhua/representative/GCF_902167405.1_gadMor3.0/GCF_902167405.1_gadMor3.0_genomic.fna.gz)
+- G_vaginalis:
+  [https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/159/155/GCF_000159155.2_ASM15915v2/GCF_000159155.2_ASM15915v2_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/159/155/GCF_000159155.2_ASM15915v2/GCF_000159155.2_ASM15915v2_genomic.fna.gz)
+- H_sapiens:
+  [https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz](https://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz)
+- T_forsythia:
+  [https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/238/215/GCF_000238215.1_ASM23821v1/GCF_000238215.1_ASM23821v1_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/238/215/GCF_000238215.1_ASM23821v1/GCF_000238215.1_ASM23821v1_genomic.fna.gz)
 
 ## Mapping
 
 To perform mapping of reads against a reference genome, we will use
-nf-core/eager to do (pre)processing of raw-reads. We will then use the resulting
-BAM for downstream analysis.
+`nf-core/eager` to do (pre)processing of raw-reads. We will then use the
+resulting BAM for downstream analysis.
 
 > Note that while we are the conda environment that  contains nextflow, we are
 > using an `shh` profile that uses singularity as the container for the all the
-> software. You will need to configure this accordingly for your own
-> environment e.g with `conda` or `docker` as described in teh documentation at
+> software. :warning: This is NOT included in this conda environment for this
+> analysis! You will need to configure this accordingly for your own environment
+> e.g with `conda` or `docker` as described in the documentation at
 > [nf-co.re](https://nf-co.re).
 
 ```bash
@@ -142,11 +153,10 @@ To use our BAMs we will use `samtools` and a GNU CoreUtils utility `shuf` (not
 in the environment due to depdendncy conflicts) to randomly extract aligned
 reads, and then use `DamageProfiler` to generate the damage patterns.
 
-As the lowest number of mapped reads is in _G. vaginalis_, we will not go
-higher than 10k reads. We will also do each one 100 times, so we can show
-how regular the resulting pattern could occur i.e. that we weren't just unlucky
-to pick up a random selection of reads that show no damage pattern (for
-example).
+As the lowest number of mapped reads is in _G. vaginalis_, we will not go higher
+than 10k reads. We will also do each one 100 times, so we can show how regular
+the resulting pattern could occur i.e. that we weren't just unlucky to pick up a
+random selection of reads that show no damage pattern (for example).
 
 ```bash
 ## Sampling command taken from https://www.biostars.org/p/145820/#145830
@@ -239,4 +249,6 @@ done
 
 ```
 
-Now the you can run the R notebook 04-DamageProfilerDownsampling_Experiment_Visualisation.md.Rmd to see the visualisation of these.
+Now the you can view the R notebook
+`results/04-DamageProfilerDownsampling_Experiment_Visualisation.Rmd` to see the
+commands used for the visualisation of these.
