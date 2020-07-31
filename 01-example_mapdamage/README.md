@@ -61,3 +61,29 @@ Finally, we can run mapDamage on the resulting SAM files:
 mapDamage -i err2900752.sam -r GCF_000001405.39_GRCh38.p13_genomic.fna -d err2900752
 mapDamage -i modHuman.sam -r GCF_000001405.39_GRCh38.p13_genomic.fna -d modHuman
 ```
+
+## Visualise
+
+You can run the following code in R (load `R` first). 
+
+Install ggplot2
+
+```r
+install.packages("ggplot2")
+library(ggplot2)
+```
+
+
+And to make and save the plots
+
+```r
+dat <- read.table("modHuman/5pCtoT_freq.txt", header=T)
+dat2 <- read.table("err2900752/5pCtoT_freq.txt", header=T)
+pdf("modhuman.plot.pdf")
+ggplot(dat, aes(x=pos, y=X5pC.T)) + geom_line() + ylim(c(0.0, 0.3)) + theme_minimal()
+dev.off()
+pdf("ancient.plot.pdf")
+ggplot(dat2, aes(x=pos, y=X5pC.T)) + geom_line() + ylim(c(0.0, 0.3)) + theme_minimal()
+dev.off()
+
+``
