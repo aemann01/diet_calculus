@@ -16,10 +16,8 @@ mkdir adapterremoval examples samples
 
 ## Real Data Downloading
 
-<!-- Allie: Missing the download commands for real samples -->
-
 ```bash
-
+wget -i euk.ids
 ```
 
 ## Read Adapter Removal, Merging and Quality Filtering
