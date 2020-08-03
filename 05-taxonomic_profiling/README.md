@@ -77,8 +77,6 @@ ls *summary | sed 's/.summary//' | parallel 'python ../scripts/merge_tax.py -i {
 
 ## Visualisation
 
-<!-- Allie: Missing a lot of these files -->
-
 To visualise, we can run the following R code in `scripts/figures.r`.
 
 Make sure to load R first, and install and load the following packages
