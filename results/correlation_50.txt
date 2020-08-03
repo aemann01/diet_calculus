@@ -1,0 +1,12 @@
+Sa0mple	Level	Value	Num_genomes	Species	Spike_level
+Ahypogaea_50	species	16	10	Ahypogaea	50
+Celaphus_50	species	0	2	Celaphus	50
+Ggallus_50	species	3	5	Ggallus	50
+Hsapiens_50	species	22	129	Hsapiens	50
+Ocuniculus_50	species	2	4	Ocuniculus	50
+Ppersica_50	species	3	17	Ppersica	50
+Slycopersicum_50	species	28	61	Slycopersicum	50
+Ssalar_50	species	1	4	Ssalar	50
+Sscrofa_50	species	3	18	Sscrofa	50
+Taestivum_50	species	7	19	Taestivum	50
+Zmays_50	species	13	39	Zmays	50

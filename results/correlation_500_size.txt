@@ -1,0 +1,12 @@
+Sample	Level	Value	Genome_size(Mb)	Species	Spike_level
+Aphypogea_500	species	139	2557.07	Ahypogaea	500
+Celaphus_500	species	0	3438.62	Celaphus	500
+Ggallus_500	species	55	1065.37	Ggallus	500
+Hsapiens_500	species	183	3272.09	Hsapiens	500
+Ocuniculus_500	species	24	2737.46	Ocuniculus	500
+Ppersica_500	species	28	227.569	Ppersica	500
+Slycopersicum_500	species	240	828.349	Slycopersicum	500
+Ssalar_500	species	7	2966.89	Ssalar	500
+Sscrofa_500	species	85	2501.91	Sscrofa	500
+Taestivum_500	species	75	15418.8	Taestivum	500
+Zmays_500	species	157	2135.08	Zmays	500

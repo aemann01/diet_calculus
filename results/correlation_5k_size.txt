@@ -1,0 +1,12 @@
+Sample	Level	Value	Genome_size(Mb)	Species	Spike_level
+Ahypogaea_5k	species	1331	2557.07	Ahypogaea	5k
+Celaphus_5k	species	0	3438.62	Celaphus	5k
+Ggallus_5k	species	627	1065.37	Ggallus	5k
+Hsapiens_5k	species	1874	3272.09	Hsapiens	5k
+Ocuniculus_5k	species	316	2737.46	Ocuniculus	5k
+Ppersica_5k	species	270	227.569	Ppersica	5k
+Slycopersicum_5k	species	2501	828.349	Slycopersicum	5k
+Ssalar_5k	species	126	2966.89	Ssalar	5k
+Sscrofa_5k	species	750	2501.91	Sscrofa	5k
+Taestivum_5k	species	666	15418.8	Taestivum	5k
+Zmays_5k	species	1539	2135.08	Zmays	5k
