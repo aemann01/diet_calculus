@@ -1,4 +1,4 @@
-name: qi_diet_dna_calculus-damage_demonstration
+name: mann2020_damagedownscaling
 channels:
   - defaults
   - bioconda

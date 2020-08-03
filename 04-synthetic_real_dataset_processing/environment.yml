@@ -1,0 +1,12 @@
+name: man2020-synthetic_real_dataset_processing
+channels:
+  - defaults
+  - bioconda
+  - conda-forge
+dependencies:
+  - bioconda::adapterremoval=2.3.0
+  - bioconda::fastx_toolkit=0.0.14
+  - bioconda::vsearch=1.1.3
+  - bioconda::cutadapt=1.9.1
+
+

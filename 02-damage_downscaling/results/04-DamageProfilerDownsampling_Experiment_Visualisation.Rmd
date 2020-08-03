@@ -1,5 +1,6 @@
 ---
 title: "Low Read Count and Damage Profile Experiment"
+author: James A. Fellows Yates
 output:
   html_document:
     df_print: paged
@@ -7,7 +8,7 @@ output:
 
 # Background
 
-This notebook generates the visualisation of experiment on downscaling mapped-read BAM files to low-numbers of reads (typical found in dietary detection) on damageprofiles. Please see the `04-DamageProfilerDownsampling_Experiment_Processing.md` for mapping, downsampling and DamageProfile generation.
+This notebook generates the visualisation of experiment on downscaling mapped-read BAM files to low-numbers of reads (typical found in dietary detection) on damageprofiles. Please see the `README.md` in this directory for mapping, downsampling and DamageProfile generation.
 
 # Preparation
 
@@ -68,7 +69,7 @@ data_original_clean <- data_original_clean %>%
          reference = map(reference, make_linnean) %>% unlist,
          reference = factor(reference, levels = reference_order))
 
-save(x = data_original_clean, file = "../results/04-DamageProfilerDownsampling_Experiment_Files/damage_original_damageprofiles.robj")
+save(x = data_original_clean, file = "04-DamageProfilerDownsampling_Experiment_Files/damage_original_damageprofiles.robj")
 ```
 
 ## Downsampled Damage Profiler
@@ -139,7 +140,7 @@ data_complete <- data_clean %>%
          reference = map(reference, make_linnean) %>% unlist,
          reference = factor(reference, levels = reference_order))
 
-save(x = data_complete, file = "../results/04-DamageProfilerDownsampling_Experiment_Files/damage_downscaling_damageprofiles.robj")
+save(x = data_complete, file = "04-DamageProfilerDownsampling_Experiment_Files/damage_downscaling_damageprofiles.robj")
   
 ```
 
@@ -150,7 +151,7 @@ save(x = data_complete, file = "../results/04-DamageProfilerDownsampling_Experim
 We can re-load pre-made data if you don't wish to generate the BAM files yourself.
 
 ```{r}
-load("../results/04-DamageProfilerDownsampling_Experiment_Files/damage_original_damageprofiles.robj")
+load("04-DamageProfilerDownsampling_Experiment_Files/damage_original_damageprofiles.robj")
 ```
 
 And plot 
@@ -175,7 +176,7 @@ original_figure
 We can again re-load pre-made data if you don't wish to generate the BAM files yourself.
 
 ```{r}
-load("../results/04-DamageProfilerDownsampling_Experiment_Files/damage_downscaling_damageprofiles.robj")
+load("04-DamageProfilerDownsampling_Experiment_Files/damage_downscaling_damageprofiles.robj")
 ```
 
 
@@ -221,14 +222,14 @@ Now we can make a final figure for the main text, which compares the downsampled
 ```{r, fig.height = 3.5}
 final_figure <- downsampling_aggregated_figure + theme(legend.position = "none") + original_figure + plot_layout(widths = c(12,2)) + plot_annotation(tag_levels = "a")
 
-ggsave("Figure_Downscaled_vs_Original_DamageProfile.pdf", width = 7, height = 4, units = "in", path = "../results/04-DamageProfilerDownsampling_Experiment_Files/", plot = final_figure, device = cairo_pdf())
-ggsave("Figure_Downscaled_vs_Original_DamageProfile.png", path = "../results/04-DamageProfilerDownsampling_Experiment_Files/", width = 7, height = 3.5, units = "in", dpi = 600, plot = final_figure,  device = png)
+ggsave("Figure_Downscaled_vs_Original_DamageProfile.pdf", width = 7, height = 4, units = "in", path = "04-DamageProfilerDownsampling_Experiment_Files/", plot = final_figure, device = cairo_pdf())
+ggsave("Figure_Downscaled_vs_Original_DamageProfile.png", path = "04-DamageProfilerDownsampling_Experiment_Files/", width = 7, height = 3.5, units = "in", dpi = 600, plot = final_figure,  device = png)
 ```
 
 We can also save the single downsampling 'full profile' example as a supplementary figure.
 
 ```{r}
-ggsave("SuppFigure_Downscaled_FullExample_DamageProfile.pdf", width = 7, height = 4, units = "in", path = "../results/04-DamageProfilerDownsampling_Experiment_Files", plot = downsampling_single_figure, device = cairo_pdf())
-ggsave("SuppFigure_Downscaled_FullExample_DamageProfile.png", path = "../results/04-DamageProfilerDownsampling_Experiment_Files/", width = 7, height = 3.5, units = "in", dpi = 600, plot = downsampling_single_figure,  device = png)
+ggsave("SuppFigure_Downscaled_FullExample_DamageProfile.pdf", width = 7, height = 4, units = "in", path = "04-DamageProfilerDownsampling_Experiment_Files", plot = downsampling_single_figure, device = cairo_pdf())
+ggsave("SuppFigure_Downscaled_FullExample_DamageProfile.png", path = "04-DamageProfilerDownsampling_Experiment_Files/", width = 7, height = 3.5, units = "in", dpi = 600, plot = downsampling_single_figure,  device = png)
 ```
 

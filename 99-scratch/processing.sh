@@ -4,7 +4,7 @@
 ###################
 #ENVIRONMENT SETUP
 ###################
-mkdir samples sim mock_euks mock_oral kraken examples sim/bact sim/endo sim/cont adapterremoval
+mkdir samples sim mock_euks mock_oral sim/bact sim/endo sim/cont
 
 ###############
 #DOWNLOAD DATA
