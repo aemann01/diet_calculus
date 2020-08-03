@@ -14,10 +14,12 @@ Create working folders
 mkdir adapterremoval examples samples
 ```
 
-## Real Data Downloading
+## Data Downloading
 
 ```bash
 wget -i euk.ids
+wget -i examples.ids
+wget -i bac.ids
 ```
 
 ## Read Adapter Removal, Merging and Quality Filtering
@@ -76,7 +78,11 @@ mv *calc* neanderthal.uniq.fa modHuman.uniq.fa samples/
 ## Trimming
 
 Now we can ensure there are no poly-A tail sequencing artefacts that can cause
-problems in repetitive regions f genomes.
+problems in repetitive regions of genomes.
+
+```bash
+ls *uniq* | sed 's/.uniq.fa//' | while read line; do cutadapt -a "A{100}" -o $line.trim.fa $line.uniq.fa; done
+```
 
 ## Dataset Spiking
 
