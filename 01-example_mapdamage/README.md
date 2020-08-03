@@ -26,9 +26,17 @@ and modern human and mapped them against a human reference genome.
 
 To download the raw sequencing data of the two samples:
 
-<!-- Allie: we are missing the samples downloading commands below -->
+```bash
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR290/002/ERR2900752/ERR2900752_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR290/002/ERR2900752/ERR2900752_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR330/004/ERR3307054/ERR3307054_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR330/004/ERR3307054/ERR3307054_2.fastq.gz
+```
+Reads for both samples were quality filtered and merged using AdapterRemoval before running mapdamage
 
 ```bash
+AdapterRemoval --file1 ERR2900752_1.fastq.gz --file2 ERR2900752_2.fastq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename modHuman --minlength 25 --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
+AdapterRemoval --file1 ERR3307054_1.fastq.gz --file2 ERR3307054_2.fastq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename {} --minlength 25 --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
 ```
 
 To download the human reference genome and unzip:
