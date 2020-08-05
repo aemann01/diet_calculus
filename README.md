@@ -46,7 +46,7 @@ analysis' software, a README describing the procedure of analysis, and
 intermediate and results files. Note that some intermediate files are not
 contained here due to large sizes (e.g. raw sequencing data and databases).
 
-### 01-example_mapdamage
+[https://github.com/aemann01/diet_calculus/tree/master/01-example_mapdamage](### 01-example_mapdamage)
 
 ### 02-damage_downscaling
 
