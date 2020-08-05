@@ -97,7 +97,7 @@ dat$Level <- factor(dat$Level, levels=c("species", "genus", "other", "unassigned
 samp.list <- levels(dat$Sample)
 ```
 
-Eukaryotic lollipop charts
+Eukaryotic lollipop charts (Figure 2)
 
 ```r
 for(i in 1:length(samp.list)){
@@ -114,7 +114,7 @@ for(i in 1:length(samp.list)){
 }
 ```
 
-Eukaryotic pie charts
+Eukaryotic pie charts (Not in manuscript)
 
 ```r
 for(i in 1:length(samp.list)){
@@ -129,7 +129,7 @@ for(i in 1:length(samp.list)){
 }
 ```
 
-Genome avaliability correlation
+Genome avaliability correlation (Supplementary Figure 2)
 
 ```r
 dat <- read.table("kraken/correlation.txt", header=T)
@@ -174,7 +174,7 @@ dat.r <- dat[-c(4),]
 cor(dat.r$Value, dat.r$Num_genomes, method="spearman")
 ```
 
-Genome size corelation pplots
+Genome size corelation pplots (Not in manuscript)
 
 ```r
 dat <- read.table("kraken/correlation_5k_size.txt", header=T)
