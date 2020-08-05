@@ -40,13 +40,10 @@ AdapterRemoval --identify-adapters --file1 examples/JAE016.A0101_R1_humfilt.fast
 AdapterRemoval --identify-adapters --file1 examples/H10b_calc_shotgun_R1.fastq.gz --file2 examples/H10b_calc_shotgun_R2.fastq.gz
 ```
 
-They all have same adapters but already started run, could do this in loop to
-clean up
+Remove adapters, merge and quality filter
 
 ```bash
-AdapterRemoval --file1 examples/ELSIDRON1L7_lTACTG_rCTCGA_R1.fastq.gz --file2 examples/ELSIDRON1L7_lTACTG_rCTCGA_R2.fastq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename neanderthal --minlength 25 --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT &
-AdapterRemoval --file1 examples/JAE016.A0101_R1_humfilt.fastq.gz --file2 examples/JAE016.A0101_R2_humfilt.fastq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename modHuman --minlength 25 --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
-ls examples/*calc*R1* | sed 's/_R1.fastq.gz//' | sed 's/examples\///' | parallel 'AdapterRemoval --file1 examples/{}_R1.fastq.gz --file2 examples/{}_R2.fastq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename {} --minlength 25 --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT'
+ls examples/*R1* | sed 's/_R1.fastq.gz//' | sed 's/examples\///' | parallel 'AdapterRemoval --file1 examples/{}_R1.fastq.gz --file2 examples/{}_R2.fastq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename {} --minlength 25 --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT'
 mv *gz *settings adapterremoval
 rm -r sim
 ```
