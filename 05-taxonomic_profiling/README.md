@@ -92,12 +92,12 @@ library(dplyr)
 Load the Kraken results
 
 ```r
-dat <- read.table("counts_forR.txt", header=T)
+dat <- read.table("kraken/counts_forR.txt", header=T)
 dat$Level <- factor(dat$Level, levels=c("species", "genus", "other", "unassigned"))
 samp.list <- levels(dat$Sample)
 ```
 
-Eukaryotic lollipop charts
+Eukaryotic lollipop charts (Figure 2)
 
 ```r
 for(i in 1:length(samp.list)){
@@ -114,7 +114,7 @@ for(i in 1:length(samp.list)){
 }
 ```
 
-Eukaryotic pie charts
+Eukaryotic pie charts (Not in manuscript)
 
 ```r
 for(i in 1:length(samp.list)){
@@ -129,10 +129,10 @@ for(i in 1:length(samp.list)){
 }
 ```
 
-Genome avaliability correlation
+Genome avaliability correlation (Supplementary Figure 2)
 
 ```r
-dat <- read.table("correlation.txt", header=T)
+dat <- read.table("kraken/correlation.txt", header=T)
 pdf("genome_size_species_reads.pdf")
 ggplot(dat, aes(x=Num_genomes, y=log10(Value), 
 	color=Spike_level, 
@@ -155,35 +155,35 @@ ggplot(dat.r, aes(x=Num_genomes, y=log10(Value),
 	xlab("Number of genome assemblies") + 
 	ylab("log10(Read count at species)")
 # correlation across just the 5k reads (since that might be jacking it up)
-dat <- read.table("correlation_5k.txt", header=T)
+dat <- read.table("kraken/correlation_5k.txt", header=T)
 cor(dat$Value, dat$Num_genomes, method="spearman")
 # without human
 dat.r <- dat[-c(4),]
 cor(dat.r$Value, dat.r$Num_genomes, method="spearman")
 # 500 reads
-dat <- read.table("correlation_500.txt", header=T)
+dat <- read.table("kraken/correlation_500.txt", header=T)
 cor(dat$Value, dat$Num_genomes, method="spearman")
 # without human
 dat.r <- dat[-c(4),]
 cor(dat.r$Value, dat.r$Num_genomes, method="spearman")
 # 50 reads
-dat <- read.table("correlation_50.txt", header=T)
+dat <- read.table("kraken/correlation_50.txt", header=T)
 cor(dat$Value, dat$Num_genomes, method="spearman")
 # without human
 dat.r <- dat[-c(4),]
 cor(dat.r$Value, dat.r$Num_genomes, method="spearman")
 ```
 
-Genome size corelation pplots
+Genome size corelation pplots (Not in manuscript)
 
 ```r
-dat <- read.table("correlation_5k_size.txt", header=T)
+dat <- read.table("kraken/correlation_5k_size.txt", header=T)
 cor(dat$Value, dat$Genome_size.Mb.)
 # [1] -0.1442868
-dat <- read.table("correlation_500_size.txt", header=T)
+dat <- read.table("kraken/correlation_500_size.txt", header=T)
 cor(dat$Value, dat$Genome_size.Mb.)
 # [1] -0.1055102
-dat <- read.table("correlation_50_size.txt", header=T)
+dat <- read.table("kraken/correlation_50_size.txt", header=T)
 cor(dat$Value, dat$Genome_size.Mb.)
 # [1] -0.1004729
 ```
