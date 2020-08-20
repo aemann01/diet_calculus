@@ -69,6 +69,7 @@ ls kraken/*calc*summary | while read line; do sed -i -e '1 i\count\tsubject\ttax
 Merge with taxonomy string. taxid_taxonomystr.txt should be a two column tab-separated file where the first column is labeled taxid and the second is taxonomy. First column should be the NCBI taxonomy number, second the taxonomy string. For example:
 
 |taxid|taxonomy|
+|------|-------|
 |1|root|
 |131567|cellular_organisms|
 |2157|cellular_organisms;Archaea|
