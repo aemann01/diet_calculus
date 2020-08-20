@@ -4,6 +4,7 @@ channels:
   - bioconda
   - conda-forge
 dependencies:
-  - bioconda::bowtie2=2.2.9
+  - bioconda::bowtie2=2.2.5
   - bioconda::mapdamage2=2.1.0
   - conda-forge::r-base=3.6.3
+  - bioconda::adapterremoval=2.3.0

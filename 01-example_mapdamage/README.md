@@ -13,10 +13,10 @@ directory of this repository.
 
 ```bash
 
-conda create env -f mann2020_damagedownscaling.yml
+conda env create -f environment.yml
 
 ## Once installed
-conda activate mann2020_damagedownscaling.yml
+conda activate mann2020_examplemapdamage
 ```
 
 ## Data Preparation
