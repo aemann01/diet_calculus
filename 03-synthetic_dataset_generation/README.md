@@ -111,9 +111,6 @@ ls *gz | parallel 'gzip -d {}'
 grep ">" *fna | awk -F":" '{print $2}' | sed 's/>//' | awk '{print $1}' > query.txt
 comm -12 <(sort query.txt) <(sort ../contaminated_genomes.Steinegger2020.txt) > contamination_hits.txt
 ```
-
-<!-- Allie: we are missing the list above -->
-
 This time we find no contaminated contigs.
 
 Now we want to to label each contig of each genome is, so we know what the name
