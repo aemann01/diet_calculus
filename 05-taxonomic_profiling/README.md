@@ -71,7 +71,7 @@ Merge with taxonomy string
 ```bash
 cd kraken
 gzip -d ../taxid_taxonomystr.txt.gz 
-ls *summary | sed 's/.summary//' | parallel 'python scripts/merge_tax.py -i {}.summary -o {}.merged -t ../taxid_taxonomystr.txt'
+ls *summary | sed 's/.summary//' | parallel 'python scripts/merge_tax.py -i {}.summary -o {}.merged -t taxid_taxonomystr.txt'
 # rm *summary
 ```
 
