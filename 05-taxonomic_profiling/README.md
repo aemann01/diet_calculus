@@ -25,7 +25,7 @@ Now we can run each sample
 ```bash
 ln -s 04-synthetic_real_dataset_processing/samples . && cd samples
 ls *fa | parallel 'gzip {}'
-ls *fa.gz | sed  's/.fa.gz//' | while read line; do kraken2 --db ../05-taxonomic_profiling/reference_databases/kraken_nt/ --threads 8 --use-names --gzip-compressed --output ../../05-taxonomic_profiling/kraken/$line.out $line.fa.gz; done
+ls *fa.gz | sed  's/.fa.gz//' | while read line; do kraken2 --db ~/reference_databases/kraken_nt/ --threads 8 --use-names --gzip-compressed --output ../../05-taxonomic_profiling/kraken/$line.out $line.fa.gz; done
 ```
 
 ## Summaries
@@ -70,7 +70,7 @@ Merge with taxonomy string
 
 ```bash
 cd kraken
-gzip -d ../taxid_taxonomystr.txt.gz 
+gzip -d taxid_taxonomystr.txt.gz 
 ls *summary | sed 's/.summary//' | parallel 'python scripts/merge_tax.py -i {}.summary -o {}.merged -t taxid_taxonomystr.txt'
 # rm *summary
 ```
