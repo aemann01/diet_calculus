@@ -57,7 +57,7 @@ bowtie2-build GCF_000001405.39_GRCh38.p13_genomic.fna human.db
 Next we run Bowtie2 on the two samples mapping to the reference genome:
 
 ```bash
-bowtie2 -x human.db -U ERR2900752.collapsed.gz -S ancienthum.sam --end-to-end --no-unal
+bowtie2 -x human.db -U ancienthum.collapsed.gz -S ancienthum.sam --end-to-end --no-unal
 bowtie2 -x human.db -U modhuman.collapsed.gz -S modhuman.sam --end-to-end --no-unal
 ```
 
@@ -66,7 +66,7 @@ bowtie2 -x human.db -U modhuman.collapsed.gz -S modhuman.sam --end-to-end --no-u
 Finally, we can run mapDamage on the resulting SAM files:
 
 ```bash
-mapDamage -i neanderthal.sam -r GCF_000001405.39_GRCh38.p13_genomic.fna -d ancienthum
+mapDamage -i ancienthum.sam -r GCF_000001405.39_GRCh38.p13_genomic.fna -d ancienthum
 mapDamage -i modhuman.sam -r GCF_000001405.39_GRCh38.p13_genomic.fna -d modhuman
 ```
 
