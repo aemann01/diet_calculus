@@ -51,14 +51,14 @@ gzip -d GCF_000001405.39_GRCh38.p13_genomic.fna.gz
 Then we can make the Bowtie2 index for mapping:
 
 ```bash
-bowtie2-build GCF_000001405.39_GRCh38.p13_genomic.fna .db
+bowtie2-build GCF_000001405.39_GRCh38.p13_genomic.fna human.db
 ```
 
 Next we run Bowtie2 on the two samples mapping to the reference genome:
 
 ```bash
-bowtie2 -x .db -U ERR2900752.collapsed.gz -S err2900752.sam --end-to-end --no-unal
-bowtie2 -x .db -U modHuman.collapsed.gz -S modHuman.sam --end-to-end --no-unal
+bowtie2 -x human.db -U ERR2900752.collapsed.gz -S err2900752.sam --end-to-end --no-unal
+bowtie2 -x human.db -U modHuman.collapsed.gz -S modHuman.sam --end-to-end --no-unal
 ```
 
 ## DamageProfiles
