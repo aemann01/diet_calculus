@@ -35,7 +35,7 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR330/004/ERR3307054/ERR3307054_2.fastq
 Reads for both samples were quality filtered and merged using AdapterRemoval before running mapdamage
 
 ```bash
-AdapterRemoval --file1 ERR2900752_1.fastq.gz --file2 ERR2900752_2.fastq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename neanderthal --minlength 25 --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
+AdapterRemoval --file1 ERR2900752_1.fastq.gz --file2 ERR2900752_2.fastq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename ancienthum --minlength 25 --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
 AdapterRemoval --file1 ERR3307054_1.fastq.gz --file2 ERR3307054_2.fastq.gz --trimns --trimqualities --minquality 25 --gzip --collapse --basename modhuman --minlength 25 --adapter1 AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG --adapter2 AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
 ```
 
@@ -57,7 +57,7 @@ bowtie2-build GCF_000001405.39_GRCh38.p13_genomic.fna human.db
 Next we run Bowtie2 on the two samples mapping to the reference genome:
 
 ```bash
-bowtie2 -x human.db -U ERR2900752.collapsed.gz -S neanderthal.sam --end-to-end --no-unal
+bowtie2 -x human.db -U ERR2900752.collapsed.gz -S ancienthum.sam --end-to-end --no-unal
 bowtie2 -x human.db -U modhuman.collapsed.gz -S modhuman.sam --end-to-end --no-unal
 ```
 
@@ -66,7 +66,7 @@ bowtie2 -x human.db -U modhuman.collapsed.gz -S modhuman.sam --end-to-end --no-u
 Finally, we can run mapDamage on the resulting SAM files:
 
 ```bash
-mapDamage -i neanderthal.sam -r GCF_000001405.39_GRCh38.p13_genomic.fna -d neanderthal
+mapDamage -i neanderthal.sam -r GCF_000001405.39_GRCh38.p13_genomic.fna -d ancienthum
 mapDamage -i modhuman.sam -r GCF_000001405.39_GRCh38.p13_genomic.fna -d modhuman
 ```
 
