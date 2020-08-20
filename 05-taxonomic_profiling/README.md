@@ -66,7 +66,7 @@ ls kraken/*calc*summary | while read line; do sed -i -e '1 i\count\tsubject\ttax
 ```
 
 
-Merge with taxonomy string. taxid_taxonomystr.txt should be a two column tab-separated file where the first column is labeled taxid and the second is taxonomy. First column should be the NCBI taxonomy number, second the taxonomy string. This file can be generated from NCBI Taxonomy database [fullnamelineage.dmp](ftp://ftp.ncbi.nih.gov/pub/taxonomy/new_taxdump/new_taxdump.tar.gz)
+Merge with taxonomy string. taxid_taxonomystr.txt should be a two column tab-separated file where the first column is labeled taxid and the second is taxonomy. First column should be the NCBI taxonomy number, second the taxonomy string. This file can be generated from at the NCBI Taxonomy FTP site (taxdump).
 
 |taxid|taxonomy|
 |------|-------|
