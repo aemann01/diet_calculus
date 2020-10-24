@@ -39,3 +39,33 @@ mv temp Slycopersicum.5k.spike.fa
 # run diamond
 diamond blastx -d ~/refdb/ncbi/nr.dmnd -q Slycopersicum.5k.spike.fa -o matches.lca --outfmt 102 --taxonmap prot.accession2taxid.gz --taxonnodes nodes.dmp
 ```
+
+Results (format: count taxonID)
+
+```bash
+awk '{print $2}' matches.lca | sort | uniq -c
+   4847 0
+      2 1
+      1 107324
+     30 131567
+      5 1437183
+      9 1437201
+      1 2303987
+      9 28526
+      1 3398
+      1 4069
+     13 4070
+      1 4071
+      1 4072
+     12 4081
+     16 4083
+     18 4107
+      2 4113
+      5 424551
+     20 49274
+      2 50514
+      1 562
+      1 58024
+      1 71274
+      1 91888
+```
