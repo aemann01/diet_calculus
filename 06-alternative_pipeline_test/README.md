@@ -3,7 +3,7 @@ To demonstrate that the patterns of misidentification seen in our kraken run are
 Install diamond using conda
 
 ```bash
- conda install -c bioconda diamond 
+ conda install -c bioconda diamond=2.0.4
  ```
 
 First need to download and format the nr protein database from ncbi
