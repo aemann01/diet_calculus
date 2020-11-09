@@ -1,5 +1,7 @@
 # diet_calculus
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4265311.svg)](https://doi.org/10.5281/zenodo.4265311)
+
 This repository describes the analysis performed in the paper Mann _et al._ XXX.
 
 ## Setup
