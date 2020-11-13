@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4265311.svg)](https://doi.org/10.5281/zenodo.4265311)
 
-This repository describes the analysis performed in the paper Mann _et al._ XXX.
+This repository describes the analysis performed in the paper Mann _et al._ 2020. Do I have something in my teeth? The trouble with genetic analyses of diet from archaeological dental calculus (*In press*)
 
 ## Setup
 
