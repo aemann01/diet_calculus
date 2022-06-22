@@ -37,8 +37,6 @@ wget -i bac.ids -q
 echo "Download complete"
 ```
 
-## NOTE: Some users have had trouble downloading the ELSIDRON1L7 forward and reverse fastq files using the link in examples.ids. If the files are not downloaded you can download them manually from here: https://oagr.org/dataset/67
-
 Next we will remove any contigs that may be contaminated.
 
 ```bash
