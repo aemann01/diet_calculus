@@ -1,7 +1,7 @@
 http://ftp.sra.ebi.ac.uk/vol1/run/ERR330/ERR3307054/JAE016.A0101_R1_humfilt.fastq.gz
 http://ftp.sra.ebi.ac.uk/vol1/run/ERR330/ERR3307054/JAE016.A0101_R2_humfilt.fastq.gz
-https://www.oagr.org.au/api/v1/dataset_file/3011/download
-https://www.oagr.org.au/api/v1/dataset_file/2962/download
+ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR132/023/SRR13263123/SRR13263123_1.fastq.gz
+ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR132/023/SRR13263123/SRR13263123_2.fastq.gz
 http://ftp.sra.ebi.ac.uk/vol1/run/ERR290/ERR2900736/CMOL53_calc_shotgun_R1.fastq.gz
 http://ftp.sra.ebi.ac.uk/vol1/run/ERR290/ERR2900736/CMOL53_calc_shotgun_R2.fastq.gz
 http://ftp.sra.ebi.ac.uk/vol1/run/ERR290/ERR2900740/F1948_calc_shotgun_R1.fastq.gz
