@@ -34,6 +34,13 @@ AdapterRemoval --file1 ../03-synthetic_dataset_generation/sim/mock_oral_sim_s1.f
 
 For real samples, we first have to determine the adapter sequence
 
+First rename Weyrich et al. 2017 samples downloaded from ENA
+
+```bash
+mv examples/SRR13263123_1.fastq.gz examples/ELSIDRON1L7_lTACTG_rCTCGA_R1.fastq.gz
+mv examples/SRR13263123_2.fastq.gz examples/ELSIDRON1L7_lTACTG_rCTCGA_R2.fastq.gz
+```
+
 ```bash
 AdapterRemoval --identify-adapters --file1 examples/ELSIDRON1L7_lTACTG_rCTCGA_R1.fastq.gz --file2 examples/ELSIDRON1L7_lTACTG_rCTCGA_R2.fastq.gz
 AdapterRemoval --identify-adapters --file1 examples/JAE016.A0101_R1_humfilt.fastq.gz --file2 examples/JAE016.A0101_R2_humfilt.fastq.gz
