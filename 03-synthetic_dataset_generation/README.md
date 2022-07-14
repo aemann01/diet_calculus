@@ -29,11 +29,11 @@ dataset.
 ```bash
 echo "Downloading data"
 cd mock_euks
-wget -i euk.ids -q &
+wget -I ../euk.ids -q &
 cd ../examples 
-wget -i examples.ids -q & 
+wget -I ../examples.ids -q & 
 cd ../mock_oral
-wget -i bac.ids -q
+wget -I ../bac.ids -q
 echo "Download complete"
 ```
 
